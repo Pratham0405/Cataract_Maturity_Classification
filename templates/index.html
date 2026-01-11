@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cataract AI | Advanced Diagnosis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <main class="app-container glass-panel">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-eye"></i>
+                <h1>CataractAI</h1>
+            </div>
+            <p class="subtitle">Clinical-Grade Cataract Classification System</p>
+        </header>
+
+        <section class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                    <h3>Drag & Drop Ocular Scan</h3>
+                    <p>or <span class="browse-link">browse files</span></p>
+                    <input type="file" id="fileInput" name="file" accept="image/*" hidden>
+                </div>
+                <div class="preview-container" id="previewContainer" style="display: none;">
+                    <img src="" alt="Scan Preview" id="imagePreview">
+                    <button class="remove-btn" id="removeBtn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            <button id="predictBtn" class="primary-btn" disabled>
+                <span>Analyze Scan</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </section>
+
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="result-card glass-panel-dark">
+                <div class="status-icon" id="statusIcon"></div>
+                <h2 id="resultTitle">Analyzing...</h2>
+                <div class="probability-bar">
+                    <div class="probability-fill" id="probFill"></div>
+                </div>
+                <!-- <p class="confidence-text">Confidence: <span id="confidenceScore">--%</span></p> -->
+                <button id="resetBtn" class="secondary-btn">New Diagnosis</button>
+            </div>
+        </section>
+
+        <section class="samples-section">
+            <h4>Test Samples</h4>
+            <div class="sample-grid">
+                <!-- We will use Jinja2 to loop through these if available, or JS to populate -->
+                {% if immature_images %}
+                <div class="sample-group">
+                    <span>Immature</span>
+                    <div class="thumbnails">
+                        {% for img in immature_images[:3] %}
+                        <img src="{{ img }}" class="sample-img" onclick="loadSample('{{ img }}')" alt="Immature Sample">
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if mature_images %}
+                <div class="sample-group">
+                    <span>Mature</span>
+                    <div class="thumbnails">
+                        {% for img in mature_images[:3] %}
+                        <img src="{{ img }}" class="sample-img" onclick="loadSample('{{ img }}')" alt="Mature Sample">
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2024 CataractAI Research. For demonstration purposes only.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

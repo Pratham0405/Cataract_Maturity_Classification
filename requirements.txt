@@ -1,0 +1,12 @@
+
+matplotlib
+seaborn
+Pillow
+gunicorn
+scipy
+tensorflow
+scikit-learn
+pandas
+numpy
+flask
+protobuf
